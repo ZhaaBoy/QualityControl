@@ -138,9 +138,26 @@
                     class="btn btn-light me-5">Cancel</a>
 
 
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit"
+                    onclick="handleUpload('form_btn', 'form_data', '{{ $data->id ? 'PATCH' : 'POST' }}');"
+                    class="btn btn-primary" id="form_btn">
+                    <span class="indicator-label">
+                        Simpan
+                    </span>
+
+                    <span class="indicator-progress" style="display: none;">
+                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
             </div>
         </div>
     </form>
 
 @endsection
+@push('script_processing')
+    <script>
+        var textarea = $('#description');
+        var newValue = $('#value_desc').val();
+        textarea.val(newValue);
+    </script>
+@endpush

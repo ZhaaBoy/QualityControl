@@ -30,60 +30,60 @@ class KelolaPermasalahanController extends Controller
         $this->kelolaPermasalahanService = $kelolaPermasalahanService;
     }
 
-    public function index(Request $request):View|JsonResponse
+    public function index(Request $request): View|JsonResponse
     {
         $data = KelolaPermasalahan::with('masterProduk')->select('kelola_permasalahan.*');
 
-    $search = $request->input('search');
+        $search = $request->input('search');
 
-    if ($search) {
-        $columns = [
-            'kelola_permasalahan.mesin',
-            'kelola_permasalahan.nama_operator',
-            'kelola_permasalahan.penyebab',
-            'kelola_permasalahan.permasalahan',
-            'kelola_permasalahan.inline',
-            'kelola_permasalahan.jam',
-        ];
+        if ($search) {
+            $columns = [
+                'kelola_permasalahan.mesin',
+                'kelola_permasalahan.nama_operator',
+                'kelola_permasalahan.penyebab',
+                'kelola_permasalahan.permasalahan',
+                'kelola_permasalahan.inline',
+                'kelola_permasalahan.jam',
+            ];
 
-        $data->where(function ($query) use ($search, $columns) {
-            foreach ($columns as $column) {
-                $query->orWhere($column, 'LIKE', '%' . $search . '%');
-            }
+            $data->where(function ($query) use ($search, $columns) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'LIKE', '%' . $search . '%');
+                }
 
-            $query->orWhereHas('masterProduk', function ($q) use ($search) {
-                $q->where('nama_produk', 'LIKE', '%' . $search . '%');
+                $query->orWhereHas('masterProduk', function ($q) use ($search) {
+                    $q->where('nama_produk', 'LIKE', '%' . $search . '%');
+                });
             });
-        });
-    }
+        }
 
         $data = $data->get();
-        
+
         if (request()->ajax()) {
             $dataTable = DataTables::of($data)
-    ->addIndexColumn()
-    ->addColumn('hari_tanggal', function ($row) {
-        $tanggal = \Carbon\Carbon::parse($row->jam); // Asumsi field `jam` adalah datetime
-        return $tanggal->translatedFormat('l, d F Y'); // Contoh: Senin, 16-06-2025
-    })
-    ->addColumn('nama_produk', fn($row) => optional($row->masterProduk)->nama_produk ?? '-')
-    ->addColumn('jam_saja', function ($row) {
-        $jam = \Carbon\Carbon::parse($row->jam);
-        return $jam->format('H:i'); // Contoh: 14:30
-    })
-    ->addColumn('action', fn($row) => ActionsHelper::renderActionButtons($row, 'kelola_permasalahan.edit', $this->menu))
-    ->rawColumns(['action']);
-            
+                ->addIndexColumn()
+                ->addColumn('hari_tanggal', function ($row) {
+                    $tanggal = \Carbon\Carbon::parse($row->jam); // Asumsi field `jam` adalah datetime
+                    return $tanggal->translatedFormat('l, d F Y'); // Contoh: Senin, 16-06-2025
+                })
+                ->addColumn('nama_produk', fn($row) => optional($row->masterProduk)->nama_produk ?? '-')
+                ->addColumn('jam_saja', function ($row) {
+                    $jam = \Carbon\Carbon::parse($row->jam);
+                    return $jam->format('H:i'); // Contoh: 14:30
+                })
+                ->addColumn('action', fn($row) => ActionsHelper::renderActionButtons($row, 'kelola_permasalahan.edit', $this->menu))
+                ->rawColumns(['action']);
+
             return $dataTable->make(true);
         }
-    
+
         return view('modules.kelola_permasalahan.index');
     }
 
     private function selectColumn(): array
     {
         $columns = Schema::getColumnListing('kelola_permasalahan');
-        $filteredColumns = array_filter($columns, function($col) {
+        $filteredColumns = array_filter($columns, function ($col) {
             return $col != 'nama_produk';
         });
 
@@ -99,13 +99,12 @@ class KelolaPermasalahanController extends Controller
         $columns = array_merge($dhqcColumn, $columns);
 
         return $columns;
-
     }
 
     public function create(): View|Factory
     {
 
-        return view('modules.kelola_permasalahan.form',[
+        return view('modules.kelola_permasalahan.form', [
             'data' => new KelolaPermasalahan(),
             'produks' => MasterProduk::get(),
         ]);
@@ -113,43 +112,15 @@ class KelolaPermasalahanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-{
-    // Validasi
-    $request->validate([
-        'jam' => 'required',
-        'mesin' => 'required',
-        'nama_operator' => 'required',
-        'nama_produk' => 'required',
-        'permasalahan' => 'required',
-        'inline' => 'required',
-        'penyebab' => 'required',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // validasi file
-    ]);
+    public function store(KelolaPermasalahanRequest $request): JsonResponse
+    {
+        $LaporanHasilProduksi = new KelolaPermasalahan();
 
-    // Simpan data
-    $data = $request->only([
-        'jam',
-        'mesin',
-        'nama_operator',
-        'nama_produk',
-        'permasalahan',
-        'inline',
-        'penyebab',
-    ]);
+        $result = $this->kelolaPermasalahanService->saveData($request, $LaporanHasilProduksi);
 
-    // Jika ada file foto
-    if ($request->hasFile('foto')) {
-        $foto = $request->file('foto');
-        $filename = time() . '_' . $foto->getClientOriginalName();
-        $foto->storeAs('public/kelola_permasalahan/foto', $filename);
-        $data['foto'] = $filename;
+        return response()->json(['text' => $result['message']], $result['status_code']);
     }
 
-    KelolaPermasalahan::create($data);
-
-    return redirect()->route('kelola_permasalahan')->with('success', 'Data berhasil disimpan');
-}
 
     /**
      * Show the form for editing the specified resource.
@@ -157,7 +128,7 @@ class KelolaPermasalahanController extends Controller
     public function edit(Int $id): View|Factory
     {
         $data = KelolaPermasalahan::findOrFail($id);
-        return view('modules.kelola_permasalahan.form',[
+        return view('modules.kelola_permasalahan.form', [
             'data' => $data,
             'produks' => MasterProduk::get(),
         ]);

@@ -22,14 +22,19 @@ class KelolaPermasalahanRequest extends FormRequest
      */
     public function rules(): array
     {
-        if(request()->isMethod('PATCH')){
-            return [
-                
-            ];
-        }else{
-            return [
-                
-            ];
-        }
+        $isUpdate = $this->method() === 'PATCH' || $this->method() === 'PUT';
+
+        return [
+            'jam'           => 'required|date',
+            'mesin'         => 'required|string|max:255',
+            'nama_operator' => 'required|string|max:255',
+            'nama_produk'   => 'required|exists:master_produk,id',
+            'permasalahan'  => 'required|string|max:255',
+            'inline'        => 'required|in:Thermolid,Vacuum,Sortir Atas',
+            'penyebab'      => 'required|string|max:255',
+            'foto'          => $isUpdate
+                ? 'nullable|image|mimes:jpeg,jpg,png|max:2048'
+                : 'required|image|mimes:jpeg,jpg,png|max:2048',
+        ];
     }
 }
