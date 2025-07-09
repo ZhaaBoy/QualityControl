@@ -1,0 +1,190 @@
+body {
+background-color: #f1f1f1
+}
+.img-fluid {
+    width: 109%;
+    max-width: 600px;
+    height: 435px;
+    border-radius: 50px;
+    padding-left: 25px;
+    padding-top: 24px;
+    padding-bottom: 5px;
+    padding-right: 35px;
+    margin-right: -17px;
+}
+
+/* Media query untuk layar besar, max-width 1000px */
+@media (max-width: 1000px) {
+.img-fluid {
+padding-top: 70px; /* Mengurangi padding atas untuk layar besar */
+margin-right: -15px; /* Sesuaikan margin untuk layar besar */
+}
+}
+
+/* Media query untuk layar medium, max-width 768px */
+@media (max-width: 768px) {
+.img-fluid {
+padding-top: 50px; /* Mengurangi padding atas untuk layar medium */
+margin-right: -10px; /* Sesuaikan margin untuk layar medium */
+}
+}
+
+/* Media query untuk layar kecil, max-width 576px */
+@media (max-width: 576px) {
+.img-fluid {
+padding-top: 30px; /* Mengurangi padding atas untuk layar kecil */
+margin-right: -5px; /* Sesuaikan margin untuk layar kecil */
+}
+}
+
+/* Media query untuk layar sangat kecil, max-width 425px */
+@media (max-width: 425px) {
+.img-fluid {
+padding-top: 30px; /* Mengurangi padding atas untuk layar sangat kecil */
+margin-right: 0; /* Hapus margin untuk layar sangat kecil */
+}
+}
+
+.btn-submit {
+    border-radius: 10px;
+    background-color: #0B1739;
+    color: #676767;
+    border: 2px solid #FEFDFD; /* Warna border ditambahkan di sini */
+}
+
+
+.btn-submit:hover {
+background-color: #5c636a;
+}
+
+.card {
+border-radius: 10px;
+background-color: #081028;
+}
+
+.card-logo {
+background-color: #081028;
+border-radius: 10px;
+padding: 100px;
+height: 480px;
+}
+
+.card-form {
+background-color: #081028;
+border-radius: 10px;
+}
+
+@media(max-width: 768px) {
+.card-text {
+font-size: 10px
+}
+.card-logo {
+padding: 10px;
+}
+}
+
+@media(max-width: 425px) {
+.card-text {
+font-size: 10px
+}
+
+.card-logo {
+border-radius: 10px;
+}
+}
+
+.captcha-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.input-container,
+.captcha {
+width: 48%;
+/* Memberikan sedikit ruang untuk margin */
+}
+.form-label {
+color: #FEFDFD;
+}
+/* Warna latar belakang hijau untuk input */
+.form-control {
+background-color: #0B1739; /* Warna hijau */
+border: 1px solid #FEFDFD; /* Warna border hijau */
+color: #676767; /* Warna teks hijau gelap */
+}
+
+/* Warna tetap hijau ketika input diisi */
+.form-control:focus,
+.form-control:valid {
+background-color: #0B1739; /* Warna latar tetap hijau */
+border-color: #FEFDFD; /* Border tetap hijau */
+color: #676767; /* Warna teks tetap hijau */
+}
+
+/* Menghilangkan shadow saat input aktif (opsional) */
+.form-control:focus {
+box-shadow: none;
+}
+
+/* Placeholder text color */
+.form-control::placeholder {
+color: #676767; /* Warna placeholder hijau gelap */
+opacity: 0.7; /* Opacity untuk placeholder */
+}
+
+.captcha span {
+display: inline-block;
+vertical-align: middle;
+}
+
+.reload {
+margin-left: 10px;
+vertical-align: middle;
+}
+
+.captcha {
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+padding: 10px;
+margin: 10px;
+}
+
+.captcha span {
+display: block;
+margin-bottom: 10px;
+}
+
+.captcha button {
+width: 100%;
+max-width: 200px;
+/* padding: 10px; */
+font-size: 16px;
+background-color: #dc3545;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.captcha button:hover {
+background-color: #c82333;
+}
+
+@media (min-width: 600px) {
+.captcha {
+flex-direction: row;
+}
+
+.captcha span {
+margin-bottom: 0;
+margin-right: 10px;
+}
+
+.captcha button {
+width: auto;
+}
+}

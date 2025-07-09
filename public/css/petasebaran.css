@@ -1,0 +1,99 @@
+body{
+    background-color: #333; /* Gunakan kode warna gelap yang Anda inginkan */
+    color: black;
+    font-family: "Arial", sans-serif;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    padding: 2%;
+  }
+
+  .logo img {
+    width: 110px;
+    margin-left: 5%;
+  }
+
+  .header-text {
+    text-align: center;
+    margin-left: 12%;
+    font-size: 23px;
+  }
+
+  .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+  }
+
+  .chart {
+      flex: 1;
+      margin-right: 20px;
+  }
+
+  .chart #dashboardChart2 {
+      /* Tambahkan style chart sesuai kebutuhan Anda */
+      width: 100%;
+      height: 450px;
+  }
+
+  .card-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+
+  }
+
+  .card {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 15px;
+    background-color: #444;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    max-height: 200px; /* Tinggi maksimum card yang baru */
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efek zoom saat hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan yang lebih kuat saat hover */
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* Warna judul card */
+}
+
+.card-content {
+    font-size: 16px;
+    color: #666; /* Warna konten card */
+}
+
+/* Gaya untuk teks berjalan */
+.running-text-container {
+    position: absolute;
+    bottom: 1;
+    width: 100%;
+    background-color: #6acce0;
+    color: black;
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .running-text {
+    animation: marquee 10s linear infinite;
+  }
+
+  @keyframes marquee {
+    100% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }

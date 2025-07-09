@@ -1,0 +1,106 @@
+@media only screen and (max-width: 988px) {
+    .map-interface {
+        width:100%;
+        height:70vw;
+        background-color: #171852 !important;
+    }
+
+    .nav-text {
+        font-size: 5px;
+        /* line-height: 1.5; */
+        letter-spacing: 3px;
+    }
+}
+.app-header {
+    height: 80px;
+}
+.nav-text {
+    font-size: 40px;
+    padding-top: 10px;
+    /* line-height: 1.5; */
+    letter-spacing: 3px;
+}
+.nav-zoom {
+    padding-top: 10px;
+    /* line-height: 1.5; */
+    letter-spacing: 3px;
+}
+
+.running-text-cont {
+    position: relative;
+    width: 100%;
+    color: white;
+    padding-top: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+
+.running-text {
+    font-size: 20px;
+    display: inline-block; /* Add this to make the text inline */
+    animation: marquee 100s linear infinite;
+}
+
+@keyframes marquee {
+    100% {
+    transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #171852;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+
+}
+
+.foto-menu-nv {
+    margin-left: -10px;
+}
+
+.mn-sidebar {
+    margin-right: -10px;
+}

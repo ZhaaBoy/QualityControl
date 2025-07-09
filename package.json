@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "apexcharts": "^3.44.0",
+    "bootstrap-datepicker": "^1.10.0",
+    "datatables.net-dt": "^1.13.6",
+    "laravel-echo": "^1.16.1",
+    "pusher-js": "^8.4.0-rc2"
+  }
+}
